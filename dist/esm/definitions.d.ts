@@ -4,6 +4,6 @@ export interface AudiotoggleBluetoothPlugin {
         mode: AudioMode;
     }): Promise<void>;
     isHeadsetConnected(): Promise<{
-        status: boolean;
+        connected: boolean;
     }>;
 }

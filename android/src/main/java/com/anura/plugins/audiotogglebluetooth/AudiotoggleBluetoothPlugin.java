@@ -68,7 +68,7 @@ public class AudiotoggleBluetoothPlugin extends Plugin {
 				&& bluetoothAdapter.getProfileConnectionState(BluetoothHeadset.HEADSET) == BluetoothHeadset.STATE_CONNECTED;
 
 		JSObject output = new JSObject();
-		output.put("status", result);
+		output.put("connected", result);
 		call.resolve(output);
 	}
 }

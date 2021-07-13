@@ -11,7 +11,7 @@ var capacitorAudiotoggleBluetooth = (function (exports, core) {
             return;
         }
         async isHeadsetConnected() {
-            return { status: false };
+            return { connected: false };
         }
     }
 

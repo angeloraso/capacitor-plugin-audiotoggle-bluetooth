@@ -2,6 +2,7 @@ import { WebPlugin } from '@capacitor/core';
 import type { AudioMode, AudiotoggleBluetoothPlugin } from './definitions';
 
 
+
 export class AudiotoggleBluetoothWeb
   extends WebPlugin
   implements AudiotoggleBluetoothPlugin {
@@ -11,7 +12,7 @@ export class AudiotoggleBluetoothWeb
     return;
   }
 
-  async isHeadsetConnected(): Promise<{ status: boolean }> {
-    return {status: false};
+  async isHeadsetConnected(): Promise<{ connected: boolean }> {
+    return {connected: false};
   }
 }

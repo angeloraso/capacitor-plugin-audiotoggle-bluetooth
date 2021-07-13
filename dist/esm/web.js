@@ -5,7 +5,7 @@ export class AudiotoggleBluetoothWeb extends WebPlugin {
         return;
     }
     async isHeadsetConnected() {
-        return { status: false };
+        return { connected: false };
     }
 }
 //# sourceMappingURL=web.js.map

@@ -5,6 +5,6 @@ export declare class AudiotoggleBluetoothWeb extends WebPlugin implements Audiot
         mode: AudioMode;
     }): Promise<void>;
     isHeadsetConnected(): Promise<{
-        status: boolean;
+        connected: boolean;
     }>;
 }

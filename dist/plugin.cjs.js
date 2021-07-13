@@ -14,7 +14,7 @@ class AudiotoggleBluetoothWeb extends core.WebPlugin {
         return;
     }
     async isHeadsetConnected() {
-        return { status: false };
+        return { connected: false };
     }
 }
 
