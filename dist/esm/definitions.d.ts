@@ -1,4 +1,4 @@
-export declare type AudioMode = 'EARPIECE' | 'SPEAKER' | 'NORMAL' | 'RINGTONE';
+export declare type AudioMode = 'EARPIECE' | 'SPEAKER' | 'NORMAL' | 'RINGTONE' | 'BLUETOOTH';
 export interface AudiotoggleBluetoothPlugin {
     setAudioMode(data: {
         mode: AudioMode;
