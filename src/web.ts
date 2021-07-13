@@ -1,12 +1,17 @@
 import { WebPlugin } from '@capacitor/core';
+import type { AudioMode, AudiotoggleBluetoothPlugin } from './definitions';
 
-import type { AudiotoggleBluetoothPlugin } from './definitions';
 
 export class AudiotoggleBluetoothWeb
   extends WebPlugin
   implements AudiotoggleBluetoothPlugin {
-  async echo(options: { value: string }): Promise<{ value: string }> {
-    console.log('ECHO', options);
-    return options;
+
+  async setAudioMode(data: {mode: AudioMode}): Promise<void> {
+    console.log('MODE: ', data.mode);
+    return;
+  }
+
+  async isHeadsetConnected(): Promise<{ status: boolean }> {
+    return {status: false};
   }
 }

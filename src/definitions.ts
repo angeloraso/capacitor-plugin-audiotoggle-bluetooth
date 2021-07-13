@@ -1,3 +1,5 @@
+export type AudioMode = 'EARPIECE' | 'SPEAKER' | 'NORMAL' | 'RINGTONE';
 export interface AudiotoggleBluetoothPlugin {
-  echo(options: { value: string }): Promise<{ value: string }>;
+  setAudioMode(data: { mode: AudioMode }): Promise<void>;
+  isHeadsetConnected(): Promise<{ status: boolean }>;
 }

@@ -1,0 +1,41 @@
+{
+  "api": {
+    "name": "AudiotoggleBluetoothPlugin",
+    "slug": "audiotogglebluetoothplugin",
+    "docs": "",
+    "tags": [],
+    "methods": [
+      {
+        "name": "setAudioMode",
+        "signature": "(data: { mode: AudioMode; }) => any",
+        "parameters": [
+          {
+            "name": "data",
+            "docs": "",
+            "type": "{ mode: AudioMode; }"
+          }
+        ],
+        "returns": "any",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [
+          "AudioMode"
+        ],
+        "slug": "setaudiomode"
+      },
+      {
+        "name": "isHeadsetConnected",
+        "signature": "() => any",
+        "parameters": [],
+        "returns": "any",
+        "tags": [],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "isheadsetconnected"
+      }
+    ],
+    "properties": []
+  },
+  "interfaces": [],
+  "enums": []
+}

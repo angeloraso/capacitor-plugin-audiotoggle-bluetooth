@@ -11,9 +11,39 @@ npx cap sync
 
 ## API
 
-<docgen-index></docgen-index>
+<docgen-index>
+
+* [`setAudioMode(...)`](#setaudiomode)
+* [`isHeadsetConnected()`](#isheadsetconnected)
+
+</docgen-index>
 
 <docgen-api>
-<!-- run docgen to generate docs from the source -->
-<!-- More info: https://github.com/ionic-team/capacitor-docgen -->
+<!--Update the source file JSDoc comments and rerun docgen to update the docs below-->
+
+### setAudioMode(...)
+
+```typescript
+setAudioMode(data: { mode: AudioMode; }) => any
+```
+
+| Param      | Type                              |
+| ---------- | --------------------------------- |
+| **`data`** | <code>{ mode: AudioMode; }</code> |
+
+**Returns:** <code>any</code>
+
+--------------------
+
+
+### isHeadsetConnected()
+
+```typescript
+isHeadsetConnected() => any
+```
+
+**Returns:** <code>any</code>
+
+--------------------
+
 </docgen-api>
