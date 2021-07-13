@@ -1,6 +1,6 @@
 # capacitor-plugin-audiotoggle-bluetooth
 
-Capacitor plugin  for switching between speaker and earpiece when playing audio.
+Capacitor plugin for switching between speaker, earpiece and bluetooth headset when playing audio.
 
 ## Install
 
