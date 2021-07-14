@@ -26,15 +26,15 @@ public class AudiotoggleBluetoothPlugin extends Plugin {
 			if (audioMode.equals("EARPIECE")) {
 				audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
 				audioManager.setSpeakerphoneOn(false);
-				audioManager.startBluetoothSco();
 				audioManager.setBluetoothScoOn(false);
-				call.resolve();
+        audioManager.stopBluetoothSco();
+        call.resolve();
 			} else if (audioMode.equals("SPEAKER")) {
 				audioManager.setMode(AudioManager.MODE_NORMAL);
 				audioManager.setSpeakerphoneOn(true);
-				audioManager.stopBluetoothSco();
 				audioManager.setBluetoothScoOn(false);
-				call.resolve();
+        audioManager.stopBluetoothSco();
+        call.resolve();
 			} else if (audioMode.equals("RINGTONE")) {
 				audioManager.setMode(AudioManager.MODE_RINGTONE);
 				audioManager.setSpeakerphoneOn(false);
@@ -48,6 +48,8 @@ public class AudiotoggleBluetoothPlugin extends Plugin {
 			} else if (audioMode.equals("NORMAL")) {
 				audioManager.setMode(AudioManager.MODE_NORMAL);
 				audioManager.setSpeakerphoneOn(false);
+        audioManager.setBluetoothScoOn(false);
+        audioManager.stopBluetoothSco();
 				call.resolve();
 			} else {
 				call.errorCallback("Invalid audio mode: " + audioMode);
