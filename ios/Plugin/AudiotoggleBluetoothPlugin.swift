@@ -18,6 +18,7 @@ public class AudiotoggleBluetoothPlugin: CAPPlugin {
             do {
                 try session.setCategory(AVAudioSession.Category.playAndRecord);
                 try session.overrideOutputAudioPort(AVAudioSession.PortOverride.none);
+                try session.setActive(true);
             } catch {
                 call.reject("ERROR: " + audioMode)
             }
@@ -25,6 +26,7 @@ public class AudiotoggleBluetoothPlugin: CAPPlugin {
             do {
                 try session.setCategory(AVAudioSession.Category.playAndRecord);
                 try session.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker);
+                try session.setActive(true);
             } catch {
                 call.reject("ERROR: " + audioMode)
             }
@@ -32,6 +34,7 @@ public class AudiotoggleBluetoothPlugin: CAPPlugin {
             do {
                 try session.setCategory(AVAudioSession.Category.playAndRecord);
                 try session.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker);
+                try session.setActive(true);
             } catch {
                 call.reject("ERROR: " + audioMode)
             }
@@ -39,12 +42,14 @@ public class AudiotoggleBluetoothPlugin: CAPPlugin {
             do {
                 try session.setCategory(AVAudioSession.Category.playAndRecord, mode: AVAudioSession.Mode.default, options:[ AVAudioSession.CategoryOptions.allowBluetooth]);
                 try session.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker);
+                try session.setActive(true);
             } catch {
                 call.reject("ERROR: " + audioMode)
             }
         } else if (audioMode == "NORMAL") {
             do {
                 try session.setCategory(AVAudioSession.Category.soloAmbient);
+                try session.setActive(true);
             } catch {
                 call.reject("ERROR: " + audioMode)
             }
