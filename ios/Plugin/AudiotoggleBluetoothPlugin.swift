@@ -16,42 +16,42 @@ public class AudiotoggleBluetoothPlugin: CAPPlugin {
             
         if (audioMode == "EARPIECE") {
             do {
-                try session.setCategory(AVAudioSession.Category.playAndRecord);
-                try session.overrideOutputAudioPort(AVAudioSession.PortOverride.none);
+                try session.setCategory(.playAndRecord, mode: .voiceChat);
+                try session.overrideOutputAudioPort(.none);
                 try session.setActive(true);
-            } catch {
-                call.reject("ERROR: " + audioMode)
+            } catch let error as NSError {
+                call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
             }
         } else if (audioMode == "SPEAKER") {
             do {
-                try session.setCategory(AVAudioSession.Category.playAndRecord);
-                try session.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker);
+                try session.setCategory(.playAndRecord, mode: .voiceChat);
+                try session.overrideOutputAudioPort(.speaker);
                 try session.setActive(true);
-            } catch {
-                call.reject("ERROR: " + audioMode)
+            } catch let error as NSError {
+                call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
             }
         } else if (audioMode == "RINGTONE") {
             do {
-                try session.setCategory(AVAudioSession.Category.playAndRecord);
-                try session.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker);
+                try session.setCategory(.playAndRecord, mode: .default);
+                try session.overrideOutputAudioPort(.speaker);
                 try session.setActive(true);
-            } catch {
-                call.reject("ERROR: " + audioMode)
+            } catch let error as NSError {
+                call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
             }
         } else if (audioMode == "BLUETOOTH") {
             do {
-                try session.setCategory(AVAudioSession.Category.playAndRecord, mode: AVAudioSession.Mode.default, options:[ AVAudioSession.CategoryOptions.allowBluetooth]);
-                try session.overrideOutputAudioPort(AVAudioSession.PortOverride.speaker);
+                try session.setCategory(.playAndRecord, mode: .voiceChat, options:[.allowBluetooth]);
+                try session.overrideOutputAudioPort(.speaker);
                 try session.setActive(true);
-            } catch {
-                call.reject("ERROR: " + audioMode)
+            } catch let error as NSError {
+                call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
             }
         } else if (audioMode == "NORMAL") {
             do {
-                try session.setCategory(AVAudioSession.Category.soloAmbient);
-                try session.setActive(true);
-            } catch {
-                call.reject("ERROR: " + audioMode)
+                try session.setCategory(.soloAmbient, mode: .default);
+                try session.setActive(false);
+            } catch let error as NSError {
+                call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
             }
         } else {
             call.reject("Invalid audio mode: " + audioMode)
