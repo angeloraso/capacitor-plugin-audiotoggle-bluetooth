@@ -9,59 +9,69 @@ import AVFoundation
  */
 @objc(AudiotoggleBluetoothPlugin)
 public class AudiotoggleBluetoothPlugin: CAPPlugin {
-    let session: AVAudioSession = AVAudioSession.sharedInstance();
 
     @objc public func setAudioMode(_ call: CAPPluginCall) {
-        let audioMode = call.getString("mode") ?? "";
-            
-        print("AUDIO MODE: \(audioMode) - SESSION:  \(session)");
-        if (audioMode == "EARPIECE") {
-            do {
-                try session.setCategory(.playAndRecord, mode: .voiceChat, options:[.interruptSpokenAudioAndMixWithOthers]);
-                try session.overrideOutputAudioPort(.none);
-                try session.setActive(true);
-            } catch let error as NSError {
-                call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
+        if #available(iOS 14.5, *) {
+            let session: AVAudioSession = AVAudioSession.sharedInstance();
+            let audioMode = call.getString("mode") ?? "";
+            if (audioMode == "EARPIECE") {
+                do {
+                    print("AUDIO MODE: \(audioMode)");
+                    try session.setCategory(.playAndRecord, mode: .voiceChat, options:[.interruptSpokenAudioAndMixWithOthers])
+                    try session.setActive(true);
+                    try session.overrideOutputAudioPort(.none);
+                } catch let error as NSError {
+                    call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
+                }
+            } else if (audioMode == "SPEAKER") {
+                do {
+                    print("AUDIO MODE: \(audioMode)");
+                    try session.setCategory(.playAndRecord, mode: .voiceChat, options:[.interruptSpokenAudioAndMixWithOthers, .defaultToSpeaker]);
+                    try session.setActive(true);
+                    try session.overrideOutputAudioPort(.speaker);
+                } catch let error as NSError {
+                    call.reject("ERROR \(audioMode):  \(error.localizedDescription)");
+                }
+            } else if (audioMode == "RINGTONE") {
+                do {
+                    print("AUDIO MODE: \(audioMode)");
+                    try session.setCategory(.playAndRecord, mode: .default, options:[.interruptSpokenAudioAndMixWithOthers, .defaultToSpeaker]);
+                    try session.setActive(true);
+                    try session.overrideOutputAudioPort(.speaker);
+                } catch let error as NSError {
+                    call.reject("ERROR \(audioMode):  \(error.localizedDescription)");
+                }
+            } else if (audioMode == "BLUETOOTH") {
+                do {
+                    print("AUDIO MODE: \(audioMode)");
+                    try session.setCategory(.playAndRecord, mode: .voiceChat, options:[.interruptSpokenAudioAndMixWithOthers, .allowBluetooth]);
+                    try session.setActive(true);
+                    try session.overrideOutputAudioPort(.speaker);
+                } catch let error as NSError {
+                    call.reject("ERROR \(audioMode):  \(error.localizedDescription)");
+                }
+            } else if (audioMode == "NORMAL") {
+                do {
+                    print("AUDIO MODE: \(audioMode)");
+                    try session.setCategory(.soloAmbient, mode: .default, options: []);
+                    try session.setActive(false);
+                } catch let error as NSError {
+                    call.reject("ERROR \(audioMode):  \(error.localizedDescription)");
+                }
+            } else {
+                print("AUDIO MODE: \(audioMode)");
+                call.reject("Invalid audio mode: " + audioMode);
             }
-        } else if (audioMode == "SPEAKER") {
-            do {
-                try session.setCategory(.playAndRecord, mode: .voiceChat, options:[.interruptSpokenAudioAndMixWithOthers, .defaultToSpeaker]);
-                try session.overrideOutputAudioPort(.speaker);
-                try session.setActive(true);
-            } catch let error as NSError {
-                call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
-            }
-        } else if (audioMode == "RINGTONE") {
-            do {
-                try session.setCategory(.playAndRecord, mode: .default, options:[.interruptSpokenAudioAndMixWithOthers, .defaultToSpeaker]);
-                try session.overrideOutputAudioPort(.speaker);
-                try session.setActive(true);
-            } catch let error as NSError {
-                call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
-            }
-        } else if (audioMode == "BLUETOOTH") {
-            do {
-                try session.setCategory(.playAndRecord, mode: .voiceChat, options:[.interruptSpokenAudioAndMixWithOthers, .allowBluetooth]);
-                try session.overrideOutputAudioPort(.speaker);
-                try session.setActive(true);
-            } catch let error as NSError {
-                call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
-            }
-        } else if (audioMode == "NORMAL") {
-            do {
-                try session.setCategory(.soloAmbient, mode: .default, options: []);
-                try session.setActive(true);
-            } catch let error as NSError {
-                call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
-            }
+                    
+            call.resolve();
         } else {
-            call.reject("Invalid audio mode: " + audioMode)
-        }
-                
-        call.resolve();
+            call.reject("IOS 14.5 version required");
+        };
+        
     }
     
     @objc public func isHeadsetConnected(_ call: CAPPluginCall) {
+        let session: AVAudioSession = AVAudioSession.sharedInstance();
         call.resolve(["connected": session.isHeadphonesConnected]);
     }
 }
