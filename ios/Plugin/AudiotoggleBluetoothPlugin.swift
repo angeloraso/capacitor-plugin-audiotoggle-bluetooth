@@ -14,9 +14,10 @@ public class AudiotoggleBluetoothPlugin: CAPPlugin {
     @objc public func setAudioMode(_ call: CAPPluginCall) {
         let audioMode = call.getString("mode") ?? "";
             
+        print("AUDIO MODE: \(audioMode) - SESSION:  \(session)");
         if (audioMode == "EARPIECE") {
             do {
-                try session.setCategory(.playAndRecord, mode: .voiceChat);
+                try session.setCategory(.playAndRecord, mode: .voiceChat, options:[.interruptSpokenAudioAndMixWithOthers]);
                 try session.overrideOutputAudioPort(.none);
                 try session.setActive(true);
             } catch let error as NSError {
@@ -24,7 +25,7 @@ public class AudiotoggleBluetoothPlugin: CAPPlugin {
             }
         } else if (audioMode == "SPEAKER") {
             do {
-                try session.setCategory(.playAndRecord, mode: .voiceChat);
+                try session.setCategory(.playAndRecord, mode: .voiceChat, options:[.interruptSpokenAudioAndMixWithOthers, .defaultToSpeaker]);
                 try session.overrideOutputAudioPort(.speaker);
                 try session.setActive(true);
             } catch let error as NSError {
@@ -32,7 +33,7 @@ public class AudiotoggleBluetoothPlugin: CAPPlugin {
             }
         } else if (audioMode == "RINGTONE") {
             do {
-                try session.setCategory(.playAndRecord, mode: .default);
+                try session.setCategory(.playAndRecord, mode: .default, options:[.interruptSpokenAudioAndMixWithOthers, .defaultToSpeaker]);
                 try session.overrideOutputAudioPort(.speaker);
                 try session.setActive(true);
             } catch let error as NSError {
@@ -40,7 +41,7 @@ public class AudiotoggleBluetoothPlugin: CAPPlugin {
             }
         } else if (audioMode == "BLUETOOTH") {
             do {
-                try session.setCategory(.playAndRecord, mode: .voiceChat, options:[.allowBluetooth]);
+                try session.setCategory(.playAndRecord, mode: .voiceChat, options:[.interruptSpokenAudioAndMixWithOthers, .allowBluetooth]);
                 try session.overrideOutputAudioPort(.speaker);
                 try session.setActive(true);
             } catch let error as NSError {
@@ -48,8 +49,8 @@ public class AudiotoggleBluetoothPlugin: CAPPlugin {
             }
         } else if (audioMode == "NORMAL") {
             do {
-                try session.setCategory(.soloAmbient, mode: .default);
-                try session.setActive(false);
+                try session.setCategory(.soloAmbient, mode: .default, options: []);
+                try session.setActive(true);
             } catch let error as NSError {
                 call.reject("ERROR \(audioMode):  \(error.localizedDescription)")
             }
